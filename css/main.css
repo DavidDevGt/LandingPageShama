@@ -1,0 +1,649 @@
+@charset "UTF-8";
+@import url('https://fonts.cdnfonts.com/css/helvetica-neue-lt-std-55');
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Open+Sans:wght@400;600;700;800&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px;
+  color: var(--grey-color);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+.title {
+  margin: 0.4em 0 0 0;
+  font-family: 'Helvetica Neue LT Std', sans-serif;  
+  font-weight: 900;
+  font-size: 6em;
+  color: #FFC300;
+  text-align: center;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.title .title-span {
+  font-family: 'Helvetica Neue LT Std', sans-serif;  
+  font-size: 0.45em;
+  text-align: center;
+  font-weight: 700;
+  color: #2E2725;
+  display: block;
+}
+
+h2 {
+  font-family: "Open Sans", sans-serif;
+  font-size: 2em;
+  text-align: center;
+  font-weight: 600;
+  color: #FFC300;
+  text-transform: capitalize;
+  margin: 1em;
+}
+
+.contenedor {
+  width: 80%;
+  margin: auto;
+}
+@media only screen and (max-width: 768px) {
+  .contenedor {
+    width: 98%;
+  }
+}
+
+header {
+  background-color: rgba(200, 200, 200, 0.948);
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+header .contenedor {
+  padding-top: 0.8em;
+  display: flex;
+  justify-content: space-between;
+}
+@media only screen and (max-width: 768px) {
+  header .contenedor {
+    padding: 1em;
+    align-items: center;
+  }
+}
+header .contenedor .logo {
+  height: 70px;
+}
+@media only screen and (max-width: 768px) {
+  header .contenedor .logo {
+    display: none;
+  }
+}
+header .contenedor .logo-mobile {
+  display: none;
+  height: 55px;
+}
+@media only screen and (max-width: 768px) {
+  header .contenedor .logo-mobile {
+    display: block;
+    margin-right: 1em;
+  }
+}
+header .contenedor .icon {
+  display: none;
+  height: 40px;
+}
+@media only screen and (max-width: 768px) {
+  header .contenedor .icon.open {
+    display: block;
+    margin-left: 1em;
+  }
+}
+@media only screen and (max-width: 768px) {
+  header .contenedor .icon.close {
+    display: block;
+    position: absolute;
+    filter: invert(1);
+    left: 2em;
+    top: 2em;
+    height: 60px;
+  }
+}
+header .contenedor #menu:target {
+  left: 0;
+}
+header .contenedor nav ul {
+  display: flex;
+}
+header .contenedor nav ul li {
+  margin: 0.8em;
+  padding: 0 0 0 0.5rem;
+  font-size: 1.2rem;
+}
+header .contenedor nav ul li a {
+  color: #2E2725;
+}
+header .contenedor nav ul li a:hover, header .contenedor nav ul li a.current {
+  color: #4f4745;
+}
+header .contenedor nav ul li a:after {
+  background: none repeat scroll 0 0 transparent;
+  bottom: 0;
+  content: "";
+  display: block;
+  height: 2px;
+  left: 50%;
+  background: #FFC300;
+  transition: width 0.3s ease 0s, left 0.3s ease 0s;
+  width: 0;
+}
+header .contenedor nav ul li a:hover:after {
+  width: 100%;
+  left: 0;
+}
+@media only screen and (max-width: 768px) {
+  header .contenedor nav ul li a {
+    font-size: 2em;
+    font-weight: 500;
+  }
+}
+@media only screen and (max-width: 768px) {
+  header .contenedor nav ul li {
+    margin: 0.8em 0;
+  }
+}
+@media only screen and (max-width: 768px) {
+  header .contenedor nav ul {
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+@media only screen and (max-width: 768px) {
+  header .contenedor nav {
+    position: fixed;
+    left: -100%;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    background-color:  rgba(200, 200, 200, 0.948);
+    transition: left 0.5s;
+  }
+}
+
+.nosotros {
+  margin: auto;
+  width: 60%;
+}
+
+.galeria {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: center;
+}
+.galeria .galeria__local-image {
+  margin: 1em;
+  width: 20em;
+  border-radius: 6px;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+}
+@media only screen and (max-width: 768px) {
+  .galeria .galeria__local-image {
+    box-shadow: none;
+  }
+}
+.galeria .galeria__local-image:hover {
+  transform: scale(1.05);
+  transition: 0.5s;
+  box-shadow: -10px 32px 24px -28px black;
+  animation-name: local;
+  animation-duration: 10s;
+}
+@keyframes local {
+  0% {
+    filter: grayscale(1);
+  }
+  100% {
+    filter: grayscale(1);
+  }
+}
+
+#local-expanded:target {
+  left: 0;
+}
+
+#frente-expanded:target {
+  left: 0;
+}
+
+#discos-expanded:target {
+  left: 0;
+}
+
+#rodillos-expanded:target {
+  left: 0;
+}
+
+.local {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+  left: -500%;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+}
+.local img {
+  height: 90%;
+}
+.local img.main-local {
+  height: 80%;
+  width: 100%;
+  object-fit: contain;
+}
+.local .close {
+  position: absolute;
+}
+
+.main-image {
+  background: url(../../media/background.jpg);
+  min-height:60vh;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right;
+  margin-top: 2em;
+  padding: 5em 0 0 10em;
+}
+@media only screen and (max-width: 768px) {
+  .main-image {
+    overflow: hidden;
+    margin: 3em 0 -10em 0;
+    padding: 0;
+  }
+}
+.main-image .main-image__descripcion {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  width: 35%;
+  color: #2E2725;
+}
+@media only screen and (max-width: 768px) {
+  .main-image .main-image__descripcion {
+    width: 100%;
+    text-align: center;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .main-image .main-image__descripcion__desc {
+    font-size: 1.2em;
+    margin: 0 0.5em;
+  }
+}
+.main-image .main-image__descripcion__rubros:before {
+  font-weight: 600;
+  font-size: 2.5em;
+  color: #FFC300;
+  content: "FERRETERÍA";
+  animation: rubro infinite 5s;
+}
+@media only screen and (max-width: 768px) {
+  .main-image .main-image__descripcion__rubros:before {
+    width: 100%;
+    font-size: 1.5em;
+  }
+}
+.main-image .main-image__boton {
+  margin-top: 2em;
+}
+@media only screen and (max-width: 768px) {
+  .main-image .main-image__boton {
+    display: flex;
+  }
+}
+.main-image a {
+  color: #2E2725;
+  border: 1px solid #FFC300;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 1.5em;
+  padding: 0.5em 0.7em;
+}
+@media only screen and (max-width: 768px) {
+  .main-image a {
+    margin: auto;
+  }
+}
+.main-image a:hover {
+  background-color: #FFC300;
+  color: #2E2725;
+}
+@keyframes rubro {
+  0% {
+    content: "FERRETERÍA";
+  }
+  20% {
+    content: "PLOMERÍA";
+  }
+  40% {
+    content: "ELÉCTRICOS";
+  }
+  60% {
+    content: "PINTURA";
+  }
+  80% {
+    content: "Y MÁS...";
+  }
+}
+
+.promo {
+  color: white;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+}
+.promo .up {
+  height: 40vh;
+  background-color: #2E2725;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.promo .up h3 {
+  text-align: center;
+}
+.promo .up h3.uno {
+  font-size: 3em;
+}
+@media only screen and (max-width: 768px) {
+  .promo .up h3.uno {
+    font-size: 2em;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .promo .up h3.dos {
+    font-size: 1em;
+  }
+}
+.promo .up a.boton {
+  font-weight: 600;
+  color: #2E2725;
+  border: 1px solid white;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 1.5em;
+  padding: 0.5em 0.7em;
+}
+.promo .up a.boton:hover {
+  background-color: #FFC300;
+  color: #2E2725;
+  border: 1px solid #2E2725;
+}
+@media only screen and (max-width: 768px) {
+  .promo .up a.boton {
+    font-size: 1em;
+  }
+}
+.promo .down {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  background-color: #FFC300;
+  padding: 1em;
+}
+@media only screen and (max-width: 1000px) {
+  .promo .down {
+    flex-direction: column;
+  }
+}
+.promo .down h3 {
+  margin: 0;
+  font-size: 1.75em;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+}
+.promo .down img {
+  height: 2.5em;
+}
+@media only screen and (max-width: 1000px) {
+  .promo .down img {
+    display: none;
+  }
+}
+.promo .down img.marca {
+  height: 4em;
+}
+.promo .down img.igual {
+  height: 1.5em;
+}
+
+.contenedor-mapa {
+  width: 1px;
+  height: 1px;
+  color: transparent;
+}
+
+.contenedor__mapa {
+  display: flex;
+  margin: auto;
+  width: 70%;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+}
+@media only screen and (max-width: 768px) {
+  .contenedor__mapa {
+    width: 95%;
+  }
+}
+
+.form {
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  color: #1F1C1B;
+  background-color: white;
+  padding: 3em;
+  margin: auto;
+  align-items: left;
+  position: relative;
+  font-size: 1em;
+  width: 50%;
+  z-index: 0;
+}
+@media only screen and (max-width: 1200px) {
+  .form {
+    width: 70%;
+    padding: 0.5em;
+  }
+}
+@media only screen and (max-width: 768px) {
+  .form {
+    width: 95%;
+    padding: 0.5em;
+  }
+}
+.form .form__campo {
+  display: flex;
+  flex-direction: column;
+  margin: 1em;
+}
+.form .form__campo label {
+  color: #bdbdbd;
+}
+@media only screen and (max-width: 768px) {
+  .form .form__campo label {
+    color: white;
+  }
+}
+.form .form__campo input {
+  border: none;
+  border-bottom: solid 1px #bdbdbd;
+  width: 100%;
+  height: 3em;
+}
+.form .form__campo-suscripcion {
+  display: grid;
+  grid-template-columns: 90% 10%;
+}
+.form .form__campo-suscripcion input {
+  height: 1.5em;
+}
+@media only screen and (max-width: 768px) {
+  .form .form__campo-suscripcion label {
+    color: #1F1C1B;
+  }
+}
+.form .form__btn {
+  color: #FFC300;
+  border: 1px solid #FFC300;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 1em;
+  padding: 0.5em 0.7em;
+  display: flex;
+  margin: auto;
+}
+.form .form__btn:hover {
+  background-color: #D22d38;
+  color: white;
+}
+@media only screen and (max-width: 768px) {
+  .form {
+    box-shadow: none;
+  }
+}
+
+.productos h3 {
+  text-align: center;
+  color: #2E2725;
+}
+.productos h3:hover{
+  color: #FFC300;
+}
+.productos .marcas {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.productos .marcas a {
+  margin: auto 1em;
+}
+.productos .ferreteria a img {
+  height: 2.5em;
+}
+.productos .ferreteria a img.truper {
+  height: 4em;
+}
+@media only screen and (max-width: 1000px) {
+  .productos .ferreteria a img.bremen {
+    height: 1.8em;
+  }
+}
+@media only screen and (max-width: 1000px) {
+  .productos .ferreteria a img {
+    height: 2.2em;
+  }
+}
+.productos .sanitarios a img {
+  height: 1.8em;
+}
+.productos .electricidad a img {
+  height: 3em;
+}
+.productos .electricidad a img.medio {
+  height: 5em;
+}
+@media only screen and (max-width: 1040px) {
+  .productos .electricidad a img.medio {
+    height: 3em;
+  }
+}
+@media only screen and (max-width: 1040px) {
+  .productos .electricidad a img {
+    height: 2em;
+  }
+}
+.productos .pinturas a img {
+  height: 3em;
+}
+@media only screen and (max-width: 1040px) {
+  .productos .pinturas a img {
+    height: 2.7em;
+  }
+}
+
+footer {
+  background: rgba(200, 200, 200, 0.948);
+  padding: 1em 0;
+  margin-top: 2em;
+  font-size: 0.8em;
+  font-weight: 400;
+}
+@media only screen and (max-width: 768px) {
+  footer {
+    font-size: 0.6em;
+    font-weight: 300;
+  }
+}
+footer .info ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+footer .info ul li a {
+  color: #1F1C1B;
+}
+@media only screen and (max-width: 768px) {
+  footer .info ul {
+    flex-direction: column;
+  }
+}
+footer .divisor {
+  height: 1px;
+  background-color: #535353;
+  margin: 1em auto;
+}
+footer .copyright ul {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+footer .copyright ul li {
+  margin: 0.5em auto;
+}
+footer .copyright ul li a {
+  color: #1F1C1B;
+  font-weight: 500;
+}
+@media only screen and (max-width: 768px) {
+  footer .copyright ul {
+    flex-direction: column;
+  }
+}
+
+/* contenedor para aplicar un margin lateral en todos los contenidos */
+@media only screen and (max-width: 768px) {
+  .title {
+    font-size: 3em;
+  }
+}
+p {
+  padding: 15px 20px;
+  text-align: center;
+  line-height: 2em;
+}
