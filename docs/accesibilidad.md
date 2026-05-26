@@ -149,7 +149,7 @@ El lightbox tiene `role="dialog" aria-modal="true"` para que lectores de pantall
 Todos los links que abren en nueva pestaña tienen `aria-label` con aclaración:
 
 ```html
-<a href="https://wa.me/50242173658"
+<a href="example.com"
    target="_blank"
    rel="noopener"
    aria-label="WhatsApp Ferretería Shama (abre en nueva ventana)">
