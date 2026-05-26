@@ -20,6 +20,8 @@ const closeMenu = () => {
   nav?.classList.remove('open');
   document.body.style.overflow = '';
   toggle?.setAttribute('aria-expanded', 'false');
+  // Restore focus to hamburger so keyboard users don't get lost
+  toggle?.focus();
 };
 
 toggle?.addEventListener('click', openMenu);
@@ -92,24 +94,34 @@ const lb    = document.getElementById('lightbox');
 const lbImg = document.getElementById('lbImg');
 
 if (lb && lbImg) {
+  let lbOpener = null; // Track which element opened the lightbox for focus-return
+
+  const onLbKey = e => { if (e.key === 'Escape') closeLb(); };
+
   document.querySelectorAll('[data-lb]').forEach(item => {
     item.addEventListener('click', () => {
+      lbOpener = item;
       lbImg.src = item.dataset.lb;
-      lbImg.alt = item.querySelector('img')?.alt || '';
+      lbImg.alt = item.querySelector('img')?.alt || 'Imagen ampliada';
       lb.classList.add('active');
       document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', onLbKey);
+      // Move focus to close button for keyboard users
+      setTimeout(() => document.getElementById('lbClose')?.focus(), 50);
     });
   });
 
   const closeLb = () => {
     lb.classList.remove('active');
     document.body.style.overflow = '';
+    document.removeEventListener('keydown', onLbKey); // cleanup
     setTimeout(() => { lbImg.src = ''; }, 400);
+    lbOpener?.focus(); // Return focus to trigger element
+    lbOpener = null;
   };
 
   document.getElementById('lbClose')?.addEventListener('click', closeLb);
   lb.addEventListener('click', e => { if (e.target === lb) closeLb(); });
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLb(); });
 }
 
 // ── CONTACT FORM (FormSubmit.co) ─────────────────
@@ -155,5 +167,15 @@ document.querySelectorAll('[data-wa]').forEach(el => {
       event_category: 'contact',
       event_label:    el.dataset.wa || 'button'
     });
+  });
+});
+
+// ── GALLERY KEYBOARD ACCESS (WCAG 2.1.1) ─────────
+document.querySelectorAll('[data-lb]').forEach(item => {
+  item.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      item.click();
+    }
   });
 });

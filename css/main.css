@@ -4,8 +4,7 @@
 ════════════════════════════════════════════════════ */
 
 /* ── FONTS ─────────────────────────────────────── */
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Open+Sans:wght@400;600;700;800&display=swap");
-@import url('https://fonts.cdnfonts.com/css/helvetica-neue-lt-std-55');
+/* Loaded via <link> in HTML for better performance (no render-blocking @import) */
 
 /* ── DESIGN TOKENS ──────────────────────────────── */
 :root {
@@ -84,6 +83,32 @@ a       { text-decoration: none; color: inherit; }
 ul, ol  { list-style: none; }
 button  { cursor: pointer; border: none; background: none; font-family: inherit; }
 input, textarea, select { font-family: inherit; }
+
+/* ── SKIP LINK ──────────────────────────────────── */
+.skip-link {
+  position: absolute;
+  top: -100px; left: var(--s4);
+  background: var(--brown);
+  color: var(--white);
+  padding: var(--s3) var(--s5);
+  border-radius: 0 0 var(--r-md) var(--r-md);
+  font-weight: 700; font-size: .88rem;
+  z-index: 200;
+  transition: top var(--t-fast);
+}
+.skip-link:focus { top: 0; }
+
+/* ── FOCUS VISIBLE (WCAG 2.4.7) ─────────────────── */
+:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+.btn:focus-visible        { outline-color: var(--brown); }
+.btn--primary:focus-visible { outline-color: var(--brown); }
+.btn--whatsapp:focus-visible { outline-color: white; }
+.nav__list li a:focus-visible { border-radius: var(--r-sm); }
+.gallery-item:focus-visible { outline-offset: 4px; }
 
 /* ── LAYOUT UTILITIES ───────────────────────────── */
 .wrap    { width: var(--w);    margin-inline: auto; }
@@ -306,6 +331,25 @@ h1, h2, h3, h4 {
 .nav__toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; transform: scaleX(0); }
 .nav__toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+/* ── Nav base (desktop) ─────────────────────────── */
+.nav { display: flex; align-items: center; }
+
+/* ── Nav close button (hidden on desktop) ────────── */
+.nav__close {
+  position: absolute;
+  top: var(--s6); right: var(--s6);
+  display: none;
+  width: 46px; height: 46px;
+  align-items: center; justify-content: center;
+  border-radius: var(--r-full);
+  background: rgba(0,0,0,.06);
+  color: var(--brown);
+  font-size: 1.6rem; font-weight: 300;
+  transition: background var(--t-fast);
+  cursor: pointer;
+}
+.nav__close:hover { background: rgba(0,0,0,.12); }
+
 /* Mobile nav full-screen overlay */
 @media (max-width: 768px) {
   .nav__toggle { display: flex; }
@@ -324,6 +368,7 @@ h1, h2, h3, h4 {
     z-index: 99;
   }
   .nav.open { opacity: 1; pointer-events: auto; }
+  .nav.open .nav__close { display: flex; }
 
   .nav__list {
     flex-direction: column;
@@ -441,7 +486,7 @@ h1, h2, h3, h4 {
 .stat__label {
   font-size: .78rem;
   font-weight: 600;
-  color: var(--grey-lt);
+  color: #e0e0e0; /* 5.2:1 contrast ratio on --brown bg — WCAG AA */
   text-transform: uppercase;
   letter-spacing: .06em;
 }
@@ -492,7 +537,7 @@ h1, h2, h3, h4 {
 }
 .cta-strip__eye { color: var(--yellow); font-size: .78rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; margin-bottom: var(--s4); }
 .cta-strip__title { font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 800; color: var(--white); margin-bottom: var(--s4); }
-.cta-strip__sub   { color: var(--grey-lt); max-width: 500px; margin: 0 auto var(--s7); font-size: 1rem; }
+.cta-strip__sub   { color: #e8e8e8; max-width: 500px; margin: 0 auto var(--s7); font-size: 1rem; }
 .cta-strip__btns  { display: flex; gap: var(--s4); justify-content: center; flex-wrap: wrap; }
 
 /* ── FORMULA BAR ────────────────────────────────── */
@@ -532,13 +577,13 @@ h1, h2, h3, h4 {
   margin-bottom: var(--s2);
 }
 .page-hero__title em { font-style: normal; color: var(--yellow); }
-.page-hero__sub { position: relative; color: var(--grey-lt); font-size: .95rem; }
+.page-hero__sub { position: relative; color: #e0e0e0; font-size: .95rem; }
 .breadcrumb {
   position: relative;
   display: flex; align-items: center; justify-content: center; gap: var(--s2);
   font-size: .8rem; color: var(--grey-lt); margin-bottom: var(--s4);
 }
-.breadcrumb a { color: var(--grey-lt); transition: color var(--t-fast); }
+.breadcrumb a { color: #e0e0e0; transition: color var(--t-fast); }
 .breadcrumb a:hover { color: var(--yellow); }
 .breadcrumb span { color: var(--yellow); }
 
@@ -561,6 +606,12 @@ h1, h2, h3, h4 {
 .pcard:hover  { box-shadow: var(--sh-lg); }
 .pcard--rev   { direction: rtl; }
 .pcard--rev > * { direction: ltr; }
+
+/* Required: used in marcas.html */
+.pcard__info {
+  display: flex;
+  flex-direction: column;
+}
 
 @media (max-width: 768px) {
   .pcard { grid-template-columns: 1fr; padding: var(--s6); gap: var(--s6); }
@@ -732,8 +783,9 @@ h1, h2, h3, h4 {
   transition: border-color var(--t-fast), box-shadow var(--t-fast);
   background: var(--white);
 }
-.fg input:focus, .fg textarea:focus {
-  outline: none;
+.fg input:focus-visible, .fg textarea:focus-visible {
+  outline: 2px solid var(--yellow);
+  outline-offset: -1px;
   border-color: var(--yellow);
   box-shadow: 0 0 0 3px rgba(255,195,0,.15);
 }
@@ -833,9 +885,13 @@ h1, h2, h3, h4 {
 }
 .wa-float__btn:hover { transform: scale(1.12); box-shadow: 0 6px 28px rgba(37,211,102,.7); }
 .wa-float__btn svg   { width: 30px; height: 30px; fill: white; }
+/* Uses transform (compositor thread only — no paint cost) */
 @keyframes wa-pulse {
-  0%,100% { box-shadow: 0 4px 18px rgba(37,211,102,.55); }
-  50%      { box-shadow: 0 4px 32px rgba(37,211,102,.85); }
+  0%,100% { transform: scale(1); }
+  50%      { transform: scale(1.06); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wa-float__btn { animation: none; }
 }
 
 /* ── FOOTER ─────────────────────────────────────── */
@@ -884,3 +940,91 @@ footer {
 }
 .footer__bot a { color: var(--yellow); transition: color var(--t-fast); }
 .footer__bot a:hover { color: var(--yellow-light); }
+
+/* ── UTILITIES ──────────────────────────────────── */
+.btn--full { width: 100%; justify-content: center; }
+
+.products-cta { text-align: center; margin-top: var(--s7); }
+.products-cta p { font-size: 1.05rem; margin-bottom: var(--s5); color: var(--grey); }
+
+/* Gallery items as buttons (accessibility) */
+.gallery-item {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  width: 100%;
+}
+
+/* ── SMALL SCREENS ──────────────────────────────── */
+@media (max-width: 374px) {
+  :root { --h-header: 60px; }
+  .header__logo img { height: 38px; }
+  .hero__badge { font-size: .65rem; padding: .25em .8em; }
+  .hero__actions { flex-direction: column; }
+  .hero__actions .btn { justify-content: center; }
+  .cta-strip__title { font-size: 1.3rem; }
+  .formula-word { font-size: .82rem; }
+  .formula-bar__inner { gap: var(--s3); }
+  .services__grid { grid-template-columns: 1fr; }
+}
+
+/* ── PRODUCTS CTA (marcas.html) ─────────────────── */
+.products-cta {
+  text-align: center;
+  margin-top: 3rem;
+}
+.products-cta__text {
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+  color: var(--grey);
+}
+
+/* ── UTILITY: FULL-WIDTH BUTTON ─────────────────── */
+.btn--full {
+  width: 100%;
+  justify-content: center;
+}
+.btn--sm {
+  font-size: .85rem;
+  padding: .6em 1.2em;
+}
+
+/* ── LOCATION CARD ELEMENTS ─────────────────────── */
+.lcard__address {
+  font-size: .9rem;
+  color: var(--grey);
+  line-height: 1.6;
+  font-style: normal;
+}
+.lcard__action {
+  margin-top: 1rem;
+}
+.lcard__contact {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin-bottom: 1rem;
+  font-size: .88rem;
+  color: var(--grey);
+}
+.lcard__contact a {
+  font-weight: 600;
+  color: var(--brown);
+}
+
+/* ── CONTACT FORM TITLE ─────────────────────────── */
+.cform__title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--brown);
+  margin-bottom: 1.5rem;
+}
+
+/* ── PRINT ──────────────────────────────────────── */
+@media print {
+  .header, footer, .wa-float, .nav__toggle { display: none !important; }
+  body { font-size: 12pt; line-height: 1.5; color: #000; }
+  a[href]::after { content: " (" attr(href) ")"; font-size: .85em; }
+  .pcard { page-break-inside: avoid; }
+}
