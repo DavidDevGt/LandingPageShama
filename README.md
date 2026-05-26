@@ -123,7 +123,6 @@ No hay build step — el CSS en `css/main.css` está listo para producción.
 ## Contacto del negocio
 
 - 📍 Km 23.1 Ruta al Atlántico, Azacualpilla, Palencia, Guatemala
-- 📱 WhatsApp: [(+502) 4217-3658](https://wa.me/50242173658)
 - 📧 fshamakm23@gmail.com
 - 🕐 Lun–Vie 7:30–18h · Sáb 7:30–17h · Dom 8–13h
 
