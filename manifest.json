@@ -1,0 +1,37 @@
+{
+  "name": "Ferretería Shama",
+  "short_name": "Shama",
+  "description": "Tu ferretería de confianza en Palencia, Guatemala. Materiales de construcción, herramientas, plomería, electricidad y pinturas.",
+  "start_url": "/index.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "theme_color": "#FFC300",
+  "background_color": "#2E2725",
+  "lang": "es",
+  "icons": [
+    {
+      "src": "media/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "media/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Cotizar por WhatsApp",
+      "url": "https://wa.me/50242173658?text=Hola%2C+quiero+cotizar+materiales",
+      "description": "Abrir WhatsApp para cotizar"
+    },
+    {
+      "name": "Ver Ubicación",
+      "url": "/ubicacion.html",
+      "description": "Cómo llegar a Ferretería Shama"
+    }
+  ]
+}
