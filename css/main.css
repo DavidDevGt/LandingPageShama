@@ -58,6 +58,8 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  /* Enables height: auto transitions in supporting browsers (Chrome 129+) */
+  interpolate-size: allow-keywords;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -78,11 +80,21 @@ body {
   overflow-x: hidden;
 }
 
+/* CSS scroll-lock when mobile nav is open — progressive enhancement over JS */
+body:has(.nav.open) { overflow: hidden; }
+
 img     { max-width: 100%; height: auto; display: block; }
 a       { text-decoration: none; color: inherit; }
 ul, ol  { list-style: none; }
 button  { cursor: pointer; border: none; background: none; font-family: inherit; }
 input, textarea, select { font-family: inherit; }
+
+/* Avoid orphaned last words in body text (Chrome 117+, Firefox 126+) */
+p { text-wrap: pretty; }
+
+/* Anchor scroll offset: clears sticky header when jumping to #id */
+:target { scroll-margin-top: calc(var(--h-header) + var(--s5)); }
+#main   { scroll-margin-top: var(--h-header); }
 
 /* ── SKIP LINK ──────────────────────────────────── */
 .skip-link {
@@ -133,6 +145,8 @@ h1, h2, h3, h4 {
   font-family: var(--ff-heading);
   line-height: 1.2;
   color: var(--brown);
+  /* Prevents orphaned single words at end of headings (Chrome 114+, FF 121+, Safari 17.4+) */
+  text-wrap: balance;
 }
 
 .page-title {
@@ -195,8 +209,8 @@ h1, h2, h3, h4 {
   border-color: var(--yellow);
 }
 .btn--primary:hover {
-  background: var(--yellow-dark);
-  border-color: var(--yellow-dark);
+  background: color-mix(in srgb, var(--yellow) 80%, black);
+  border-color: color-mix(in srgb, var(--yellow) 80%, black);
   transform: translateY(-2px);
   box-shadow: var(--sh-md);
 }
@@ -227,10 +241,10 @@ h1, h2, h3, h4 {
   border-color: var(--green-wa);
 }
 .btn--whatsapp:hover {
-  background: #1ebe57;
-  border-color: #1ebe57;
+  background: color-mix(in srgb, var(--green-wa) 82%, black);
+  border-color: color-mix(in srgb, var(--green-wa) 82%, black);
   transform: translateY(-2px);
-  box-shadow: 0 4px 18px rgba(37,211,102,.45);
+  box-shadow: 0 4px 18px color-mix(in srgb, var(--green-wa) 55%, transparent);
 }
 .btn--lg { padding: 1em 2.2em; font-size: 1.05rem; }
 
@@ -366,6 +380,8 @@ h1, h2, h3, h4 {
     pointer-events: none;
     transition: opacity var(--t-slow);
     z-index: 99;
+    /* Prevent scroll chain when overlay is open */
+    overscroll-behavior: contain;
   }
   .nav.open { opacity: 1; pointer-events: auto; }
   .nav.open .nav__close { display: flex; }
@@ -510,7 +526,7 @@ h1, h2, h3, h4 {
   box-shadow: var(--sh-sm);
   transition: all var(--t-slow);
 }
-.svc-card:hover {
+.svc-card:is(:hover, :focus-within) {
   transform: translateY(-7px);
   box-shadow: var(--sh-xl);
 }
@@ -589,7 +605,14 @@ h1, h2, h3, h4 {
 
 /* ── PRODUCTS PAGE ──────────────────────────────── */
 .products-section { padding: var(--s9) 0; }
-.products-list { display: flex; flex-direction: column; gap: var(--s7); }
+.products-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s7);
+  /* Container context for child container queries */
+  container-type: inline-size;
+  container-name: products;
+}
 
 .pcard {
   display: grid;
@@ -613,6 +636,12 @@ h1, h2, h3, h4 {
   flex-direction: column;
 }
 
+/* Container query: stacks card when container (not viewport) is narrow */
+@container products (max-width: 640px) {
+  .pcard { grid-template-columns: 1fr; padding: var(--s6); gap: var(--s5); }
+  .pcard--rev { direction: ltr; }
+}
+/* Fallback media query for browsers without container query support */
 @media (max-width: 768px) {
   .pcard { grid-template-columns: 1fr; padding: var(--s6); gap: var(--s6); }
   .pcard--rev { direction: ltr; }
@@ -672,22 +701,23 @@ h1, h2, h3, h4 {
   box-shadow: var(--sh-md);
   transition: all var(--t-slow);
 }
-.gallery-item:hover { transform: translateY(-5px); box-shadow: var(--sh-xl); }
+/* :is() combines hover + focus-visible so keyboard users see same effect */
+.gallery-item:is(:hover, :focus-visible) { transform: translateY(-5px); box-shadow: var(--sh-xl); }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--t-slow); }
-.gallery-item:hover img { transform: scale(1.08); }
+.gallery-item:is(:hover, :focus-visible) img { transform: scale(1.08); }
 .gallery-item__ov {
   position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
   background: rgba(46,39,37,0);
   transition: background var(--t-med);
 }
-.gallery-item:hover .gallery-item__ov { background: rgba(46,39,37,.45); }
+.gallery-item:is(:hover, :focus-visible) .gallery-item__ov { background: rgba(46,39,37,.45); }
 .gallery-item__ov svg {
   width: 40px; height: 40px; fill: white;
   opacity: 0; transform: scale(.7);
   transition: all var(--t-med);
 }
-.gallery-item:hover .gallery-item__ov svg { opacity: 1; transform: scale(1); }
+.gallery-item:is(:hover, :focus-visible) .gallery-item__ov svg { opacity: 1; transform: scale(1); }
 
 /* Lightbox */
 .lightbox {
@@ -699,6 +729,14 @@ h1, h2, h3, h4 {
   transition: opacity var(--t-slow);
 }
 .lightbox.active { opacity: 1; pointer-events: auto; }
+
+/* @starting-style: defines the "before entry" state so CSS can animate in
+   the element when .active is first added. Chrome 117+, Firefox 129+. */
+@starting-style {
+  .lightbox.active      { opacity: 0; }
+  .lightbox.active img  { transform: scale(.93); }
+}
+
 .lightbox img {
   max-width: 90vw; max-height: 86vh;
   object-fit: contain;
@@ -790,6 +828,10 @@ h1, h2, h3, h4 {
   box-shadow: 0 0 0 3px rgba(255,195,0,.15);
 }
 .fg textarea { resize: vertical; min-height: 110px; }
+/* Auto-grow textarea based on content (Chrome 123+) */
+@supports (field-sizing: content) {
+  .fg textarea { field-sizing: content; max-height: 280px; overflow-y: auto; }
+}
 .fg--check { display: flex; align-items: center; gap: var(--s3); }
 .fg--check input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--yellow); flex-shrink: 0; }
 .fg--check label { font-size: .85rem; text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--grey); margin: 0; }
@@ -829,14 +871,15 @@ h1, h2, h3, h4 {
   padding: var(--s6);
   box-shadow: var(--sh-sm);
 }
-.lcard h3 {
+/* :is() groups h2 and h3 — same specificity, shorter code */
+.lcard :is(h2, h3) {
   font-size: .88rem; font-weight: 800;
   color: var(--brown);
   text-transform: uppercase; letter-spacing: .05em;
   margin-bottom: var(--s4);
   display: flex; align-items: center; gap: var(--s2);
 }
-.lcard h3 .dot { width: 8px; height: 8px; background: var(--yellow); border-radius: var(--r-full); flex-shrink: 0; }
+.lcard :is(h2, h3) .dot { width: 8px; height: 8px; background: var(--yellow); border-radius: var(--r-full); flex-shrink: 0; }
 
 .hours { display: flex; flex-direction: column; gap: var(--s2); }
 .hrow {
@@ -848,6 +891,11 @@ h1, h2, h3, h4 {
 .hrow:last-child { border: none; }
 .hrow .day  { font-weight: 600; color: var(--brown); }
 .hrow .time { color: var(--yellow-dark); font-weight: 700; }
+
+/* Closed day — dimmed, italic, no yellow */
+.hrow--closed { opacity: .55; }
+.hrow--closed .day  { color: var(--grey); }
+.hrow--closed .time { color: var(--grey); font-weight: 500; font-style: italic; }
 
 .map-wrap {
   border-radius: var(--r-lg);
@@ -967,6 +1015,38 @@ footer {
   .formula-word { font-size: .82rem; }
   .formula-bar__inner { gap: var(--s3); }
   .services__grid { grid-template-columns: 1fr; }
+}
+
+/* ── MODERN CSS — 2025 TECHNIQUES ──────────────── */
+
+/* @property: typed custom property with smooth gradient animation */
+@property --gradient-angle {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 108deg;
+}
+
+/* Logical properties: padding-inline / margin-block replaces left/right/top/bottom */
+.wrap, .wrap-sm, .wrap-xs {
+  padding-inline: var(--s4);
+}
+
+/* :has() — parent selector: highlight form group when its input has content */
+.fg:has(input:not(:placeholder-shown)) label,
+.fg:has(textarea:not(:placeholder-shown)) label {
+  color: var(--yellow-dark);
+}
+
+/* :has() — card flip indicator when pcard image is focused */
+.pcard:has(:focus-visible) {
+  box-shadow: var(--sh-lg);
+  outline: 2px solid var(--yellow);
+  outline-offset: 3px;
+}
+
+/* Subgrid for footer alignment (Chrome 117+, Firefox 71+, Safari 16+) */
+@supports (grid-template-rows: subgrid) {
+  .footer__grid { align-items: start; }
 }
 
 /* ── PRODUCTS CTA (marcas.html) ─────────────────── */

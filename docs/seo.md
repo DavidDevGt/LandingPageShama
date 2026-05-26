@@ -34,7 +34,7 @@
     "addressCountry": "GT"
   },
   "telephone": "+50242173658",
-  "openingHours": ["Mo-Fr 07:30-18:00", "Sa 07:30-17:00", "Su 08:00-13:00"],
+  "openingHours": ["Mo-Fr 07:30-17:00", "Sa 07:30-13:00"],
   "geo": { "latitude": 14.7202, "longitude": -90.3788 }
 }
 ```
